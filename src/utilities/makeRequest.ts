@@ -1,10 +1,8 @@
 import { botProperties } from "../Store";
 
-import Axios, { AxiosRequestConfig } from "axios";
+import Axios, { AxiosRequestConfig, Method } from "axios";
 
-export type HTTPMethod = "GET" | "DELETE" | "PUT" | "POST" | "PATCH";
-
-export const makeRequest = (async (method: HTTPMethod, path: string, data?: unknown): Promise<any> => {
+export const makeRequest = (async (method: Method, path: string, data?: unknown): Promise<any> => {
   const axiosConfig: AxiosRequestConfig = ({
     "method": method,
     "url": `https://discord.com/api/v${botProperties.options.apiVersion}${path}`
