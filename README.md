@@ -1,2 +1,2 @@
 # ruhs-next
-A next-generation version for ruhs library
+ruhs, a next-generation Discord library.

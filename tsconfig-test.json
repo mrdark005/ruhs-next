@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "target": "ESNext",
+    "outDir": "./",
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "include": [
+    "./test.ts"
+  ],
+  "exclude": []
+}
