@@ -1,5 +1,7 @@
 import WebSocket from "ws";
+
 import { botProperties, singleRequests, cache, eventHandlers } from "../Store";
+import { setupGuild } from "./setupGuild";
 
 let pack: (data: Record<string, unknown>) => Buffer | string;
 let unpack: (data: WebSocket.Data | any) => ({
@@ -52,8 +54,21 @@ export const setupSocket = (async (token: string) => {
       }));
     } else if (result.op === 0) {
       if (result.t === "READY") {
+        cache.guilds = new Collection(result.d.guilds, "id");
+
         if (eventHandlers.ready) {
           await eventHandlers.ready();
+        }
+      } else if (result.d === "GUILD_CREATE") {
+        const guilds = new Collection();
+        const guild = setupGuild(result.d);
+
+        if(cache.guilds.has(guild.id)) {
+          cache.guilds.set(guild.id, guild);
+          await eventHandlers.guildCreate(guild);
+        } else {
+          cache.guilds.set(guild.id, guild);
+          await eventHandlers.guildCache(guild);
         }
       }
     }

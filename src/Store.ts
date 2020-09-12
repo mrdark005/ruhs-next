@@ -1,9 +1,13 @@
 import WebSocket from "ws";
 
+import Collection from "./utilities/Collection";
 import { ClientOptions } from "./structures/setupClient";
+import { Guild } from "./structures/setupGuild";
 
 export interface EventHandlers {
   ready?: (() => Promise<void> | void);
+  guildCreate?: ((guild: Guild) => Promise<void> | void);
+  guildCache?: ((guild: Guild) => Promise<void> | void);
 }
 
 export let botProperties = ({
@@ -13,8 +17,8 @@ export let botProperties = ({
 });
 
 export let cache = ({
-  "guilds": new Map(),
-  "channels": new Map()
+  "guilds": new Collection<Guild>(),
+  "channels": new Collection()
 });
 
 export let singleRequests = ({
